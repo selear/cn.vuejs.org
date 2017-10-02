@@ -406,34 +406,41 @@ prop 是单向绑定的：当父组件的属性变化时，将传导给子组件
 
 我们可以为组件的 props 指定验证规格。如果传入的数据不符合规格，Vue 会发出警告。当组件给其他人使用时，这很有用。
 
-要指定验证规格，需要用对象的形式，而不能用字符串数组：
+要指定验证规格，需要将原有的字符串数组形式变更为对象形式：
 
-``` js
+```js
+// 添加数据验证前, props元素为设想中的数据类型
+Vue.component('example', {
+  props: ['age', 'remark', 'usernameRequired', 'score', 'defaultObject', 'customValidator']
+  ...
+});
+
+// 添加数据验证后
 Vue.component('example', {
   props: {
     // 基础类型检测 (`null` 意思是任何类型都可以)
-    propA: Number,
+    'age': Number,
     // 多种类型
-    propB: [String, Number],
+    'remark': [String, Number],
     // 必传且是字符串
-    propC: {
+    'usernameRequired': {
       type: String,
       required: true
     },
     // 数字，有默认值
-    propD: {
+    'score': {
       type: Number,
       default: 100
     },
     // 数组/对象的默认值应当由一个工厂函数返回
-    propE: {
+    'defaultObject': {
       type: Object,
       default: function () {
         return { message: 'hello' }
       }
     },
     // 自定义验证函数
-    propF: {
+    'customValidator': {
       validator: function (value) {
         return value > 10
       }
